@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Layout</title>
+    <style type="text/css">
+        body, html {
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            overflow: hidden;
+            background-color: white; /* стандартный белый фон */
+            color: black; /* черный текст */
+            font-family: Arial, sans-serif;
+        }
 
+        #loader {
+            position: fixed; 
+            left: 0; 
+            top: 0;
+            right: 0; 
+            bottom: 0;
+            background-color: rgba(26, 26, 26, 0.9); /* темный полупрозрачный фон */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 9999; /* выше всего остального контента */
+        }
+
+        .loading-bar {
+            width: 40%;
+            height: 5px;
+            background-color: #4caf50; /* зеленый цвет полосы загрузки */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-bar::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            background-color: #8bc34a; /* светло-зеленый цвет полосы загрузки */
+            animation: loading 2s infinite;
+            width: 100%;
+            left: -100%;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+
+        #content {
+            display: none; 
+            height: 100%;
+        }
+
+        #iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="loading-bar"></div>
+    </div>
+    <div id="content">
+        <iframe id="iframe" src="https://youtubeproxyft.pythonanywhere.com/"></iframe>
+    </div>
+    <script type="text/javascript">
+        var iframe = document.getElementById('iframe');
+        var loader = document.getElementById('loader');
+        var content = document.getElementById('content');
+
+        // Показать индикатор загрузки до загрузки iframe
+        loader.style.display = 'flex';
+        iframe.onload = function() {
+            // Скрыть индикатор загрузки и показать контент после загрузки iframe
+            loader.style.display = 'none';
+            content.style.display = 'block';
+        };
+    </script>
+</body>
+</html>
